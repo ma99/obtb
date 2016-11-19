@@ -8,11 +8,12 @@ use App\Schedule;
 
 class Booking extends Model
 {
-    public $incrementing = false;
+   // protected $primaryKey = 'column_name';
+    public $incrementing = false; 
 
     public function schedule()
     {
-    	return $this->belongsTo( Schedule::class);
+    	return $this->belongsTo(Schedule::class);
     	//return $this->belongsTo('Schedule'); don't work this way :(
     }
 }

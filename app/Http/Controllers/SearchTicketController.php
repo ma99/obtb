@@ -34,8 +34,7 @@ class SearchTicketController extends Controller
 
 		//echo $schedule->id;									
 				
-		foreach ($schedules as $schedule) {
-			//echo $schedule->bus_id;
+		foreach ($schedules as $schedule) {			//echo $schedule->bus_id;
 			$bus = Bus::where('id', $schedule->bus_id)->first();
 			//echo ($bus);
 
@@ -53,7 +52,22 @@ class SearchTicketController extends Controller
 	        echo '4. AvailableSeats = ' . $availableSeats;
 	        echo '3. Bus Type = ' . $bus->type;
 
-		 }
+	        //fare
+	        if ($bus_type  == 'ac_delux') { 
+
+			    $fare_ac = Fare::where('rout_id', $routeId)->
+								 where('type', 'ac')->value('amount');
+
+
+			     $fare_delux = Fare::where('rout_id', $routeId)->
+									 where('type', 'delux')->value('amount');
+
+				$fare = $fare_ac .'/'. $fare_delux ;
+			}
+			else 
+			$fare = Fare::where('rout_id', $routeId)->
+						  where('type', $bus_type)->value('amount');
+		}
 		
 		//return($schedules);	
     }

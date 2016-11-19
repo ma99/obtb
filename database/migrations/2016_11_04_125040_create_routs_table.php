@@ -19,7 +19,7 @@ class CreateRoutsTable extends Migration
             $table->string('departure_city');
             $table->string('arrival_city');
             $table->smallInteger('distance')->unsigned();           
-            $table->smallInteger('fare')->unsigned()->default(400);
+            //$table->smallInteger('fare')->unsigned()->default(400);
             $table->timestamps();
         });
     }
