@@ -17,7 +17,9 @@ class CreateBusesTable extends Migration
             $table->increments('id');
             $table->string('reg_no');
             $table->enum('type', ['AC', 'Non-AC']);
+            $table->smallInteger('fare')->unsigned()->default(400);
             $table->tinyInteger('total_seats')->unsigned();
+            $table->string('description');
             $table->timestamps();
         });
     }
