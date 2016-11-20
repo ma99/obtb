@@ -44,9 +44,8 @@ class SearchTicketController extends Controller
 			//echo $schedule->bus_id;
 			//dd($schedule);
 			//echo $schedule;
-			echo '1. Departure Time = ' . $schedule->departure_time;
-			//echo "</br>";
-			echo '2. Arrival Time = ' . $schedule->arrival_time;
+			// echo '1. Departure Time = ' . $schedule->departure_time;
+			// echo '2. Arrival Time = ' . $schedule->arrival_time;
 
 
 			$bus = Bus::where('id', $schedule->bus_id)->first();
@@ -68,8 +67,8 @@ class SearchTicketController extends Controller
 	        //echo 'SeatsBooked = ' . $totalSeatsBooked;
 	        $availableSeats = $bus->total_seats - $totalSeatsBooked;
 
-	        echo '4. AvailableSeats = ' . $availableSeats;
-	        echo '3. Bus Type = ' . $bus->type;
+	        // echo '4. AvailableSeats = ' . $availableSeats;
+	        // echo '3. Bus Type = ' . $bus->type;
 	       
 	        $bus_type = $bus->type;
 	        //fare
@@ -89,7 +88,7 @@ class SearchTicketController extends Controller
 				$fare = Fare::where('rout_id', $routeId)->
 						  	  where('type', $bus_type)->value('amount');
 
-			echo '5. fare = '. $fare;
+			//echo '5. fare = '. $fare;
 			$buses[] = [
 				'departure_time' => $schedule->departure_time,
 				'arrival_time' => $schedule->arrival_time,
@@ -99,9 +98,12 @@ class SearchTicketController extends Controller
 			];
 
 		}
-		echo "\n";
-		echo '------------------------------';
-		echo "\n";
-		return($buses);	
+		// //dd($buses);
+		 foreach ($buses as $bus) {
+		 	echo $bus['fare'];
+		 	//echo $bus->fare;
+		 	echo "\n";
+		 }
+		//return($buses);	
     }
 }
