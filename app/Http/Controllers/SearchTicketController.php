@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Booking;
 use App\Bus;
 use App\Rout;
+use App\Fare;
 use App\Schedule;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,13 @@ class SearchTicketController extends Controller
     public function searchTicket() {
     	$from  = 'dhaka';
 		$to = 'sylhet';
-		$date = '2016-11-30';
+		$date = '2016-12-30';
 		
 		$route = Rout::where('departure_city', $from)->
 						where( 'arrival_city', $to)->first();
 		
 		$routeId= $route->id;
-		echo '5. fare = '. $route->fare;
+		//echo '5. fare = '. $route->fare;
 
 		//$email = DB::table('users')->where('name', 'John')->value('email');
 		/*$routeId= Rout::where('departure_city', $from)->
@@ -38,13 +39,14 @@ class SearchTicketController extends Controller
 		//echo $schedule->id;									
 
 		//dd($schedules);
+		$buses = [];
 		foreach ($schedules as $schedule) {
 			//echo $schedule->bus_id;
 			//dd($schedule);
 			//echo $schedule;
 			echo '1. Departure Time = ' . $schedule->departure_time;
-			echo "</br>";
-			echo '2. Arraival Time = ' . $schedule->arrival_time;
+			//echo "</br>";
+			echo '2. Arrival Time = ' . $schedule->arrival_time;
 
 
 			$bus = Bus::where('id', $schedule->bus_id)->first();
@@ -66,27 +68,40 @@ class SearchTicketController extends Controller
 	        //echo 'SeatsBooked = ' . $totalSeatsBooked;
 	        $availableSeats = $bus->total_seats - $totalSeatsBooked;
 
-	         echo '4. AvailableSeats = ' . $availableSeats;
-	         echo '3. Bus Type = ' . $bus->type;
+	        echo '4. AvailableSeats = ' . $availableSeats;
+	        echo '3. Bus Type = ' . $bus->type;
 	       
-
+	        $bus_type = $bus->type;
 	        //fare
-	        if ($bus_type  == 'ac_delux') { 
+	        if ($bus_type  == 'ac-deluxe') { 
 
 			    $fare_ac = Fare::where('rout_id', $routeId)->
-								 where('type', 'ac')->value('amount');
+							 	 where('type', 'ac')->value('amount');
 
 
 			     $fare_delux = Fare::where('rout_id', $routeId)->
-									 where('type', 'delux')->value('amount');
+									 where('type', 'deluxe')->value('amount');
 
 				$fare = $fare_ac .'/'. $fare_delux ;
+				
 			}
 			else 
-			$fare = Fare::where('rout_id', $routeId)->
-						  where('type', $bus_type)->value('amount');
+				$fare = Fare::where('rout_id', $routeId)->
+						  	  where('type', $bus_type)->value('amount');
+
+			echo '5. fare = '. $fare;
+			$buses[] = [
+				'departure_time' => $schedule->departure_time,
+				'arrival_time' => $schedule->arrival_time,
+				'bus_type' => $bus->type,
+				'available_seats' => $availableSeats,
+				'fare' => $fare
+			];
+
 		}
-		
-		//return($schedules);	
+		echo "\n";
+		echo '------------------------------';
+		echo "\n";
+		return($buses);	
     }
 }
