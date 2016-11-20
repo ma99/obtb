@@ -63,7 +63,7 @@ class SearchTicketController extends Controller
 		     		//echo $totalSeatsBooked;
 		     		$totalSeatsBooked = $totalSeatsBooked + $booking->seats;   		     				     		
 		     	}	
-			//}
+			
 	        //echo 'SeatsBooked = ' . $totalSeatsBooked;
 	        $availableSeats = $bus->total_seats - $totalSeatsBooked;
 
@@ -99,11 +99,14 @@ class SearchTicketController extends Controller
 
 		}
 		// //dd($buses);
-		 foreach ($buses as $bus) {
-		 	echo $bus['fare'];
-		 	//echo $bus->fare;
+		
+		$buses = $object = json_decode(json_encode($buses), FALSE);
+		
+		foreach ($buses as $bus) {
+		 	//echo $bus['fare'];
+		 	echo $bus->fare;
 		 	echo "\n";
-		 }
+		}
 		//return($buses);	
     }
 }
