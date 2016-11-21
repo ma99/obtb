@@ -99,7 +99,7 @@ class SearchTicketController extends Controller
 
 		}
 		// //dd($buses);
-		
+		//array of array to array of object 
 		$buses = $object = json_decode(json_encode($buses), FALSE);
 		
 		foreach ($buses as $bus) {
