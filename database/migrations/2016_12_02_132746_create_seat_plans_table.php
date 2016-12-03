@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDeluxesTable extends Migration
+class CreateSeatPlansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateDeluxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ac_deluxe', function (Blueprint $table) {
+        Schema::create('seat_plans', function (Blueprint $table) {
             $table->increments('id');
-           $table->integer('bus_id');
-            $table->smallInteger('total_seats');
+            $table->integer('bus_id');
+            $table->string('seat_no');
+            $table->string('status')->default('available');            
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateDeluxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ac_delux');
+        Schema::dropIfExists('seat_plans');
     }
 }

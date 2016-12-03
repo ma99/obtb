@@ -16,8 +16,9 @@ class CreateSeatsTable extends Migration
         Schema::create('seats', function (Blueprint $table) {
             $table->increments('id');
             $table->string('booking_id');
-            $table->tinyInteger('seat_no');
-            $table->enum('status', ['Available', 'Booked', 'Confirmed'])->default('Available');
+            $table->string('seat_no');
+            $table->string('status')->default('booked');
+            // $table->enum('status', ['Available', 'Booked', 'Confirmed'])->default('Available');
             $table->timestamps();
         });
     }
