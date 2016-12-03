@@ -70,6 +70,7 @@ class SearchTicketController extends Controller
 			];
 		}
 		// //dd($buses);
+
 		$buses = $object = json_decode(json_encode($buses), FALSE);		
 		// foreach ($buses as $bus) {
 		//  	//echo $bus['fare'];
@@ -78,8 +79,6 @@ class SearchTicketController extends Controller
 		// }
 		//return $seatsByBooking;
 		return $buses; 
-		
-				
     }
 
     public function seatsByBooking($schedule, $scheduleId) {
