@@ -94,14 +94,14 @@ class SearchTicketController extends Controller
 		print_r('__________________');
 		echo "<Br>";
 		print_r($seatsByBooking);
-		$arrLength = count($seatPlanByBusId);
+		//$arrLength = count($seatPlanByBusId);
 		//$result = array_replace_recursive($seatPlanByBusId, $seatsByBooking);
 
 		//for ($i= 0; $i< $arrLength ; $i++) {
 			//$result = array_merge($seatsByBooking, $seatPlanByBusId); // both 17				
 			$result = array_merge($seatsByBooking, $seatPlanByBusId); //11			
 				//$result [] = array_replace($seatPlanByBusId[$i], $seatsByBooking[$i]);						
-			$results = array_unique($result);
+			//$results = array_unique($result);
 		//}
 		//$result = array_replace_recursive($seatPlanByBusId, $seatsByBooking);
 		//$result = array_merge($seatPlanByBusId, $seatsByBooking);
@@ -109,8 +109,9 @@ class SearchTicketController extends Controller
 		// print_r('2 __________________');
 		// print_r($seatPlanByBusId);
 		// print_r('3__________________');
+			$details = $this->unique_multidim_array($result,'seat_no'); 
 
-		dd($results);
+		dd($details);
 		//return $seatPlanByBusId;
 		//return $buses; 
     }
@@ -143,4 +144,19 @@ class SearchTicketController extends Controller
 			return $arr_seats; 
 			
     }
+
+    public function unique_multidim_array($array, $key) {
+	    $temp_array = array();
+	    $i = 0;
+	    $key_array = array();
+	   
+	    foreach($array as $val) {
+	        if (!in_array($val[$key], $key_array)) {
+	            $key_array[$i] = $val[$key];
+	            $temp_array[$i] = $val;
+	        }
+	        $i++;
+	    }
+	    return $temp_array;
+	} 
 }
