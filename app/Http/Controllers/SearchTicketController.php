@@ -8,6 +8,8 @@ use App\Rout;
 use App\Fare;
 use App\Seat;
 use App\Schedule;
+use App\SeatPlan;
+
 use Illuminate\Http\Request;
 
 class SearchTicketController extends Controller
@@ -31,9 +33,17 @@ class SearchTicketController extends Controller
 									}])->get();		
 		//$buses = [];		
 		$scheduleId = 1;
+		$busId = 123;
 		foreach ($schedules as $schedule) {
 
-			$seatsByBooking[] = $this->seatsByBooking($schedule, $scheduleId);
+			if ($schedule->id == $scheduleId) {
+				$seatsByBooking = $this->seatsByBooking($schedule, $scheduleId);
+			}
+			//$busId = $schedule->bus_id;
+			if ($schedule->bus_id == $busId) {
+				$seatPlanByBusId = $this->seatPlanByBusId($schedule, $busId);
+			}
+			
 			//return $seatsByBooking;
 			$bus = Bus::where('id', $schedule->bus_id)->first();			
 			$totalSeatsBooked = 0;
@@ -78,26 +88,59 @@ class SearchTicketController extends Controller
 		//  	echo "\n";
 		// }
 		//return $seatsByBooking;
-		return $buses; 
+		//$result = array_merge($seatPlanByBusId, $seatsByBooking);
+		print_r($seatPlanByBusId);
+		echo "<Br>";
+		print_r('__________________');
+		echo "<Br>";
+		print_r($seatsByBooking);
+		$arrLength = count($seatPlanByBusId);
+		//$result = array_replace_recursive($seatPlanByBusId, $seatsByBooking);
+
+		//for ($i= 0; $i< $arrLength ; $i++) {
+			//$result = array_merge($seatsByBooking, $seatPlanByBusId); // both 17				
+			$result = array_merge($seatsByBooking, $seatPlanByBusId); //11			
+				//$result [] = array_replace($seatPlanByBusId[$i], $seatsByBooking[$i]);						
+			$results = array_unique($result);
+		//}
+		//$result = array_replace_recursive($seatPlanByBusId, $seatsByBooking);
+		//$result = array_merge($seatPlanByBusId, $seatsByBooking);
+		//$results = call_user_func('array_merge', $result);
+		// print_r('2 __________________');
+		// print_r($seatPlanByBusId);
+		// print_r('3__________________');
+
+		dd($results);
+		//return $seatPlanByBusId;
+		//return $buses; 
     }
 
     public function seatsByBooking($schedule, $scheduleId) {
-    		// dd($schedule);
-	        //foreach ($this->schedules as $schedule) {
-		        if ($schedule->id == $scheduleId) {
 
-					foreach ($schedule->bookings as $booking) {
-						$seats = Seat::where('booking_id', $booking->id)->get(); //collection
-						foreach ($seats as $seat) {
-							$arr_seats[] = [
-								'seat_no' => $seat->seat_no,
-								'status'  => $seat->status 	 
-							];
-						}
-						//return $arr_seats; 
-					}
-					return $arr_seats; 
+			foreach ($schedule->bookings as $booking) {
+				$seats = Seat::where('booking_id', $booking->id)->get(); //collection
+				foreach ($seats as $seat) {
+					$arr_seats[] = [								
+						'seat_no' => $seat->seat_no,
+						'status'  => $seat->status 	 
+					];
 				}
-			//}	
+			}
+			return $arr_seats; 
+    }
+
+    public function seatPlanByBusId($schedule, $busId) {
+    		
+			$seats = SeatPlan::where('bus_id', $busId)->get(); //collection
+			//dd($seats);
+			foreach ($seats as $seat) {
+				$arr_seats[] = [								
+					'seat_no' => $seat->seat_no,
+					'status'  => $seat->status 	 
+				];
+
+			}						
+			return $arr_seats; 
+			
     }
 }
