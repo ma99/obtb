@@ -96,6 +96,7 @@ class SearchTicketController extends Controller
 		print_r($seatsByBooking);
 		$result = array_merge($seatsByBooking, $seatPlanByBusId); //11	
 		$details = $this->unique_multidim_array($result,'seat_no'); // can be any key
+		sort($details);
 		dd($details);
 		//return $seatPlanByBusId;
 		//return $buses; 
@@ -131,9 +132,9 @@ class SearchTicketController extends Controller
     }
 
     public function unique_multidim_array($array, $key) {
-	    $temp_array = array();
+	    $temp_array = [] ;// = array();
 	    $i = 0;
-	    $key_array = array();
+	    $key_array = []; // array();
 	   
 	    foreach($array as $val) {
 	        if (!in_array($val[$key], $key_array)) {
