@@ -94,23 +94,8 @@ class SearchTicketController extends Controller
 		print_r('__________________');
 		echo "<Br>";
 		print_r($seatsByBooking);
-		//$arrLength = count($seatPlanByBusId);
-		//$result = array_replace_recursive($seatPlanByBusId, $seatsByBooking);
-
-		//for ($i= 0; $i< $arrLength ; $i++) {
-			//$result = array_merge($seatsByBooking, $seatPlanByBusId); // both 17				
-			$result = array_merge($seatsByBooking, $seatPlanByBusId); //11			
-				//$result [] = array_replace($seatPlanByBusId[$i], $seatsByBooking[$i]);						
-			//$results = array_unique($result);
-		//}
-		//$result = array_replace_recursive($seatPlanByBusId, $seatsByBooking);
-		//$result = array_merge($seatPlanByBusId, $seatsByBooking);
-		//$results = call_user_func('array_merge', $result);
-		// print_r('2 __________________');
-		// print_r($seatPlanByBusId);
-		// print_r('3__________________');
-			$details = $this->unique_multidim_array($result,'seat_no'); 
-
+		$result = array_merge($seatsByBooking, $seatPlanByBusId); //11	
+		$details = $this->unique_multidim_array($result,'seat_no'); // can be any key
 		dd($details);
 		//return $seatPlanByBusId;
 		//return $buses; 
