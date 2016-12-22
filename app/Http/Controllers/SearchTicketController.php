@@ -17,6 +17,16 @@ class SearchTicketController extends Controller
     protected $schedules;
     //protected $seatsByBooking = [];
 
+    public function __construct()
+    {
+        //$this->middleware('auth');
+    }
+
+    public function index()
+    {
+    	return view('pages.home');
+    }
+
     public function searchTicket() {
     	$from  = 'dhaka';
 		$to = 'sylhet';
