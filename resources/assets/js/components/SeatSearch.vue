@@ -16,6 +16,8 @@
                         </select>
                         <span>Selected: {{ selected }}</span>                       
                       <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                      <input v-model="message" placeholder="edit me">
+                      <p>Message is: {{ message }}</p>
                     </form>
                 </div>
             </div>
