@@ -14,8 +14,8 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('seat-search', require('./components/SeatSearch.vue'));
+Vue.component('seat', require('./components/Seat.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app'    
 });

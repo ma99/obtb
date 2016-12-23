@@ -8,8 +8,7 @@
                     <div class="panel-body">
                         I'm an example component!
                     </div>
-                    <!-- <input v-model="message" placeholder="edit me">
-                      <p>Message is: @{{ message }} </p> -->
+                    
                     <form>
                        <select v-model="selected">
                           <option>A</option>
@@ -17,7 +16,9 @@
                           <option>C</option>
                         </select>
                         <span>Selected: {{ selected }} </span>                       
-                      <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+                        <input v-model="message" placeholder="edit me">
+                        <p>Message is: {{ message }} </p>
+                      <button type="submit" class="btn btn-default">Submit</button>
                       
                     </form>
                 </div>
@@ -27,9 +28,18 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Seat seach Component ready.')
-        }
+    module.exports = {
+      data() {
+          return {                  
+              selected: 'A',
+              message: ''
+          }
+      },
+      mounted() {
+          console.log('Seat seach Component ready.')
+      }
     }
+    
+    
+       
 </script>
